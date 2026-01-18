@@ -4,7 +4,7 @@
  */
 
 class TaskManager {
-  static VALID_PRIORITIES = ['low', 'medium', 'high'];
+  static VALID_PRIORITIES = ["low", "medium", "high"];
 
   constructor() {
     this.tasks = [];
@@ -17,9 +17,11 @@ class TaskManager {
    * @param {string} priority - Priority level (low, medium, high)
    * @returns {Object} The created task
    */
-  addTask(title, description, priority = 'medium') {
+  addTask(title, description, priority = "medium") {
     if (!TaskManager.VALID_PRIORITIES.includes(priority)) {
-      throw new Error(`Priority must be one of ${TaskManager.VALID_PRIORITIES.join(', ')}`);
+      throw new Error(
+        `Priority must be one of ${TaskManager.VALID_PRIORITIES.join(", ")}`,
+      );
     }
 
     const task = {
@@ -27,7 +29,7 @@ class TaskManager {
       title,
       description,
       priority,
-      completed: false
+      completed: false,
     };
     this.tasks.push(task);
     return task;
@@ -40,19 +42,27 @@ class TaskManager {
    */
   listTasks(priority = null) {
     if (priority) {
-      return this.tasks.filter(task => task.priority === priority);
+      return this.tasks.filter((task) => task.priority === priority);
     }
     return this.tasks;
+  }
+  /**
+   * Get all high priority tasks sorted by ID
+   * @returns {Array} High priority tasks
+   */
+  getHighPriorityTasks() {
+    const highPriority = this.listTasks("high");
+    return highPriority.sort((a, b) => a.id - b.id);
   }
 }
 
 // Export for use in other files
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
   module.exports = TaskManager;
 }
 
 // Example usage
 if (require.main === module) {
   const manager = new TaskManager();
-  console.log('Task Manager initialized successfully');
+  console.log("Task Manager initialized successfully");
 }
